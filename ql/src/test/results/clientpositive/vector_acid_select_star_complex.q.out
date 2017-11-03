@@ -1,0 +1,30 @@
+PREHOOK: query: create table complex2 (c1 int, c2 string, c3 array<struct<c3_1: int, c3_2: string>>, c4 string, c5 array<struct<c5_1: int, c5_2: string>>) clustered by (c1) into 2 buckets stored as orc TBLPROPERTIES ("transactional"="true")
+PREHOOK: type: CREATETABLE
+PREHOOK: Output: database:default
+PREHOOK: Output: default@complex2
+POSTHOOK: query: create table complex2 (c1 int, c2 string, c3 array<struct<c3_1: int, c3_2: string>>, c4 string, c5 array<struct<c5_1: int, c5_2: string>>) clustered by (c1) into 2 buckets stored as orc TBLPROPERTIES ("transactional"="true")
+POSTHOOK: type: CREATETABLE
+POSTHOOK: Output: database:default
+POSTHOOK: Output: default@complex2
+PREHOOK: query: insert into complex2 select 111, 'abc', array(named_struct('c3_1', 1, 'c3_2', 'a'), named_struct('c3_1', 2, 'c3_2', 'b')), 'c4', array(named_struct('c5_1', 1, 'c5_2', 'a'), named_struct('c5_1', 2, 'c5_2', 'b')) from src limit 1
+PREHOOK: type: QUERY
+PREHOOK: Input: default@src
+PREHOOK: Output: default@complex2
+POSTHOOK: query: insert into complex2 select 111, 'abc', array(named_struct('c3_1', 1, 'c3_2', 'a'), named_struct('c3_1', 2, 'c3_2', 'b')), 'c4', array(named_struct('c5_1', 1, 'c5_2', 'a'), named_struct('c5_1', 2, 'c5_2', 'b')) from src limit 1
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@src
+POSTHOOK: Output: default@complex2
+POSTHOOK: Lineage: complex2.c1 SIMPLE []
+POSTHOOK: Lineage: complex2.c2 SIMPLE []
+POSTHOOK: Lineage: complex2.c3 EXPRESSION []
+POSTHOOK: Lineage: complex2.c4 SIMPLE []
+POSTHOOK: Lineage: complex2.c5 EXPRESSION []
+PREHOOK: query: select count(*) from complex2
+PREHOOK: type: QUERY
+PREHOOK: Input: default@complex2
+#### A masked pattern was here ####
+POSTHOOK: query: select count(*) from complex2
+POSTHOOK: type: QUERY
+POSTHOOK: Input: default@complex2
+#### A masked pattern was here ####
+1
